@@ -1,0 +1,107 @@
+# [START swagger]
+swagger: "2.0"
+info:
+  description: "A primality test API for determining whether an input number is prime."
+  title: "Primality Test API"
+  version: "1.0.0"
+host: "zenlogic-chatbot.appspot.com"
+# [END swagger]
+basePath: "/"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+schemes:
+  - "https"
+paths:
+  "/primes/{number}":
+    get:
+      description: "Returns true or false if a number is prime or not."
+      operationId: "primes"
+      produces:
+        - "application/json"
+      parameters:
+        - description: "A number to judge if it's prime or not."
+          name: "number"
+          in: "path"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "The given number is prime or not."
+          schema:
+            $ref: "#/definitions/primeNumber"
+      security:
+        - api_key: []
+  "/auth/info/googlejwt":
+    get:
+      description: "Returns the requests' authentication information."
+      operationId: "auth_info_google_jwt"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Authenication info."
+          schema:
+            $ref: "#/definitions/authInfoResponse"
+      security:
+      - api_key: []
+      - google_jwt: []
+  "/auth/info/googleidtoken":
+    get:
+      description: "Returns the requests' authentication information."
+      operationId: "authInfoGoogleIdToken"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Authenication info."
+          schema:
+            $ref: "#/definitions/authInfoResponse"
+      security:
+      - api_key: []
+      - google_id_token: []
+definitions:
+  echoMessage:
+    properties:
+      message:
+        type: "string"
+  authInfoResponse:
+    properties:
+      id:
+        type: "string"
+      email:
+        type: "string"
+securityDefinitions:
+  # This section configures basic authentication with an API key.
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+  # This section configures authentication using Google API Service Accounts
+  # to sign a json web token. This is mostly used for server-to-server
+  # communication.
+  google_jwt:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    # This must match the 'iss' field in the JWT.
+    x-google-issuer: "jwt-client.endpoints.sample.google.com"
+    # Update this with your service account's email address.
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/jwk/YOUR-SERVICE-ACCOUNT-EMAIL"
+    # This must match the "aud" field in the JWT. You can add multiple
+    # audiences to accept JWTs from multiple clients.
+    x-google-audiences: "echo.endpoints.sample.google.com"
+  # This section configures authentication using Google OAuth2 ID Tokens.
+  # ID Tokens can be obtained using OAuth2 clients, and can be used to access
+  # your API on behalf of a particular user.
+  google_id_token:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "https://accounts.google.com"
+    # Your OAuth2 client's Client ID must be added here. You can add
+    # multiple client IDs to accept tokens from multiple clients.
+    x-google-audiences: "YOUR-CLIENT-ID"
+
