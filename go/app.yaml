@@ -7,6 +7,6 @@ manual_scaling:
 endpoints_api_service:
   # The following values are to be replaced by information from the output of
   # 'gcloud service-management deploy openapi.yaml' command.
-  name: zenlogic-chatbot.appspot.com
-  config_id: 2017-12-03r0
-service: rachael
+  name: YOUR-PROJECT-ID.appspot.com
+  config_id: CONFIG_ID
+service: default

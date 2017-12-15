@@ -4,7 +4,7 @@ info:
   description: "A primality test API for determining whether an input number is prime."
   title: "Primality Test API"
   version: "1.0.0"
-host: "zenlogic-chatbot.appspot.com"
+host: "YOUR-PROJECT-ID.appspot.com"
 # [END swagger]
 basePath: "/"
 consumes:
@@ -16,12 +16,12 @@ schemes:
 paths:
   "/primes/{number}":
     get:
-      description: "Returns true or false if a number is prime or not."
+      description: "Returns true or false if a given number is prime or not."
       operationId: "primes"
       produces:
         - "application/json"
       parameters:
-        - description: "A number to judge if it's prime or not."
+        - description: "A number to test if it's prime or not."
           name: "number"
           in: "path"
           required: true
